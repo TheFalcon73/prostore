@@ -1,5 +1,8 @@
+// Here is where the special or custom Types are defined based on the valdation declared using ZOD
+// Then, these Types are used on different screens, forms, logic, etc to ensure data quality
+
 import {z} from "zod";
-import { insertProductSchema } from "@/lib/validators";
+import { insertProductSchema, insertCartSchema, cartItemSchema} from "@/lib/validators";
 
 
 export type Product = z.infer<typeof insertProductSchema> & {
@@ -8,3 +11,6 @@ export type Product = z.infer<typeof insertProductSchema> & {
   numReviews: number;
   createdAt: Date;
 };
+
+export type Cart = z.infer<typeof insertCartSchema>;
+export type CartItem = z.infer<typeof cartItemSchema>;
