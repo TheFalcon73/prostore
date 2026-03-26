@@ -45,23 +45,34 @@ export const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-  export const cartItemSchema = z.object(
-    { 
-      productId: z.string().min(1, "Product is Required"),
-      name: z.string().min(1, "Name is Required"),
-      slug: z.string().min(1, "Slug is Required"),
-      qty: z.number().int().nonnegative('Quantity must be a positive number'),
-      image: z.string().min(1, "Image is Required"),
-      price: currency
-    });
+export const cartItemSchema = z.object({
+  productId: z.string().min(1, "Product is Required"),
+  name: z.string().min(1, "Name is Required"),
+  slug: z.string().min(1, "Slug is Required"),
+  qty: z.number().int().nonnegative("Quantity must be a positive number"),
+  image: z.string().min(1, "Image is Required"),
+  price: currency,
+});
 
-  export const insertCartSchema = z.object({
-    items: z.array(cartItemSchema),
-    itemsPrice: currency,
-    totalPrice: currency,
-    shippingPrice: currency,      
-    taxPrice: currency,
-    sessionCartId: z.string().min(1, 'Session cart is is required'),
-    userId: z.string().optional().nullable()
-  });
-  
+export const insertCartSchema = z.object({
+  items: z.array(cartItemSchema),
+  itemsPrice: currency,
+  totalPrice: currency,
+  shippingPrice: currency,
+  taxPrice: currency,
+  sessionCartId: z.string().min(1, "Session cart is is required"),
+  userId: z.string().optional().nullable(),
+});
+
+// Schema for the Shipping Address
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(3, "Name must be at least 3 characters"),
+  streetAddress: z
+    .string()
+    .min(3, "Street Address must be at least 3 characters"),
+  city: z.string().min(3, "City  must be at least 3 characters"),
+  postalCode: z.string().min(3, "Postal Code must be at least 3 characters"),
+  country: z.string().min(3, "Country must be at least 3 characters"),
+  lat: z.number().optional(),
+  lng: z.number().optional(),
+});
