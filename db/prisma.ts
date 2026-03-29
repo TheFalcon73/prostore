@@ -1,5 +1,5 @@
-import { PrismaNeon } from '@prisma/adapter-neon';
-import { PrismaClient } from '@/lib/generated/prisma/client';
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaClient } from "@/lib/generated/prisma/client";
 
 // Instantiates the Prisma adapter using just the connection string.
 // No need for Pool, neonConfig, or ws setup in Prisma 7+.
@@ -19,6 +19,65 @@ export const prisma = new PrismaClient({ adapter }).$extends({
       rating: {
         compute(product) {
           return product.rating.toString();
+        },
+      },
+    },
+    cart: {
+      itemsPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      taxPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      shippingPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      totalPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+    },
+    order: {
+      itemsPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      taxPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      shippingPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+      totalPrice: {
+        needs: { itemsPrice: true },
+        compute(cart) {
+          return cart.itemsPrice.toString();
+        },
+      },
+    },
+    orderItem: {
+      price: {
+        compute(cart) {
+          return cart.price.toString();
         },
       },
     },
