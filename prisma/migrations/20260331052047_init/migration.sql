@@ -103,7 +103,7 @@ CREATE TABLE "Order" (
     "isPaid" BOOLEAN DEFAULT false,
     "paidAt" TIMESTAMP(6),
     "isDelivered" BOOLEAN DEFAULT false,
-    "devileredAt" TIMESTAMP(6),
+    "deliveredAt" TIMESTAMP(6),
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")

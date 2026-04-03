@@ -58,8 +58,8 @@ const OrderPage = async (props: {
               </TableCell>
               <TableCell>
                 {" "}
-                {order.isDelivered && order.devileredAt
-                  ? formatDateTime(order.devileredAt).dateTime
+                {order.isDelivered && order.deliveredAt
+                  ? formatDateTime(order.deliveredAt).dateTime
                   : "Not delivered"}{" "}
               </TableCell>
               <TableCell>

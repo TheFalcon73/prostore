@@ -11,7 +11,7 @@ import { revalidatePath } from "next/cache";
 import { Prisma } from "../generated/prisma/client";
 
 // Calculate Cart Prices
-const calcPrice = (items: CartItem[]) => {
+ const calcPrice = (items: CartItem[]) => {
   const itemsPrice = round2(
       items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0),
     ),
@@ -25,9 +25,11 @@ const calcPrice = (items: CartItem[]) => {
     taxPrice: taxPrice.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
   };
-};
+}; 
 
-export async function addItemToCart(data: CartItem) {
+
+
+ export async function addItemToCart(data: CartItem) {
   try {
     // Check for the cart cookie
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
@@ -95,6 +97,7 @@ export async function addItemToCart(data: CartItem) {
         cart.items.push(item);
       }
 
+
       // Save to the database
       await prisma.cart.update({
         where: { id: cart.id },
@@ -112,15 +115,17 @@ export async function addItemToCart(data: CartItem) {
       };
     }
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return {
       success: false,
       message: formatError(error),
     };
   }
-}
+} 
 
-export async function getMyCart() {
+
+
+/* export async function getMyCart() {
   // Check for the cart cookie
   const sessionCartId = (await cookies()).get("sessionCartId")?.value;
   if (!sessionCartId) throw new Error("Cart Session not Found");
@@ -136,6 +141,11 @@ export async function getMyCart() {
 
   if (!cart) return undefined;
 
+  //// Start bug note ////
+  /// The next part of the code is bugged with Prsima Client
+  /// I have added a new version of getMyCart with a Raw query instead of this
+ //// End bug note ////
+ 
   // if we do have a cart, the convert decimals and return
   return convertToPlainObject({
     ...cart,
@@ -145,7 +155,44 @@ export async function getMyCart() {
     shippingPrice: cart.shippingPrice.toString(),
     taxPrice: cart.taxPrice.toString(),
   });
-}
+
+}  */
+
+ export async function getMyCart() {
+  const sessionCartId = (await cookies()).get("sessionCartId")?.value;
+  if (!sessionCartId) throw new Error("Cart Session not Found");
+
+  const session = await auth();
+  const userId = session?.user?.id ? (session.user.id as string) : undefined;
+
+  const cart = await prisma.cart.findFirst({
+    where: userId ? { userId: userId } : { sessionCartId: sessionCartId },
+  });
+
+  if (!cart) return undefined;
+
+  const rawPrices = await prisma.$queryRaw<Array<{
+    itemsPrice: string;
+    totalPrice: string;
+    taxPrice: string;
+    shippingPrice: string;
+  }>>`
+    SELECT "itemsPrice", "totalPrice", "taxPrice", "shippingPrice"
+    FROM "Cart"
+    WHERE id = ${cart.id}::uuid
+  `;
+
+  const prices = rawPrices[0];
+
+  return convertToPlainObject({
+    ...cart,
+    items: cart.items as CartItem[],
+    itemsPrice: prices.itemsPrice,
+    totalPrice: prices.totalPrice,
+    shippingPrice: prices.shippingPrice,
+    taxPrice: prices.taxPrice,
+  });
+} 
 
 export async function removeItemFromCart (productId: string) {
   try{

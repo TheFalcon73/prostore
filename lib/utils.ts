@@ -7,9 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Convert Prisma object to regular JavaScript object
-export function convertToPlainObject<T>(value: T): T {
+ export function convertToPlainObject<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
-}
+} 
 
 // Format number with decimal places
 export function formatNumberWithDecimal(num: number): string {
@@ -70,6 +70,13 @@ export function formatCurrency(amount: number | string | null) {
   } else {
     return "NaN";
   }
+}
+
+// Format Number
+const NUMBER_FORMATER = new Intl.NumberFormat('en-US');
+
+export function formatNumber(number:number) {
+  return NUMBER_FORMATER.format(number)
 }
 
 // Shorten UUID

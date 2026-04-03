@@ -243,3 +243,12 @@ body {
     @apply font-sans;
   }
 }
+
+/* Uploadthing button text override */
+html.dark .upload-field .text-white {
+    color: #000000 !important;
+}
+
+.upload-field .text-white {
+    color: #000000 !important;
+}

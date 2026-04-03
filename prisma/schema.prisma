@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
   // previewFeatures = ["driverAdapters"]
 }
@@ -114,7 +114,7 @@ model Order {
   isPaid          Boolean?     @default(false)
   paidAt          DateTime?    @db.Timestamp(6)
   isDelivered     Boolean?     @default(false)
-  devileredAt     DateTime?    @db.Timestamp(6)
+  deliveredAt     DateTime?    @db.Timestamp(6)
   createdAt       DateTime    @default(now()) @db.Timestamp(6)
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderitems      OrderItem[]
