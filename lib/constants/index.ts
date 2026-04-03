@@ -53,4 +53,7 @@ export const productDefaultValues = {
   bannerImage: null,
 }
 
-export const USER_ROLES = process.env.USER_ROLES ? process.env.USER_ROLES : ['admin', 'user'];
+// export const USER_ROLES = process.env.USER_ROLES ? process.env.USER_ROLES : ['admin', 'user'];
+export const USER_ROLES = process.env.USER_ROLES 
+  ? process.env.USER_ROLES.split(',') 
+  : ['admin', 'user'];
