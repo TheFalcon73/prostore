@@ -131,26 +131,24 @@ const UserButton = async () => {
             </Link>
           </DropdownMenuItem>
 
-          {session?.user?.role === 'admin' && (
-                      <DropdownMenuItem>
-            <Link href="/admin/overview" className="w-full">
-              Admin
-            </Link>
-          </DropdownMenuItem>
-          ) }
+          {session?.user?.role === "admin" && (
+            <DropdownMenuItem>
+              <Link href="/admin/overview" className="w-full">
+                Admin
+              </Link>
+            </DropdownMenuItem>
+          )}
 
-
-          <DropdownMenuItem className="p-0 mb-1">
-            <form action={signOutUser} className="w-full">
-              <Button
-                type="submit" // ✅ explicit submit type
-                className="w-full py-4 px-2 h-4 justify-start"
-                variant="ghost"
+          <form action={signOutUser} className="w-full">
+            <DropdownMenuItem className="p-0 mb-1" asChild>
+              <button
+                type="submit"
+                className="w-full py-4 px-2 h-4 justify-start text-left"
               >
                 Sign Out
-              </Button>
-            </form>
-          </DropdownMenuItem>
+              </button>
+            </DropdownMenuItem>
+          </form>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

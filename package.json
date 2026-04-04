@@ -10,7 +10,8 @@
     "postinstall": "prisma generate",
     "dev:inspect": "node --inspect ./node_modules/next/dist/bin/next dev",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "email": "copy .env .\\node_modules\\react-email\\ && email dev --dir email --port 3001"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -21,6 +22,7 @@
     "@paypal/react-paypal-js": "^9.1.0",
     "@prisma/adapter-neon": "^7.5.0",
     "@prisma/adapter-pg": "^7.5.0",
+    "@react-email/components": "^1.0.11",
     "@uploadthing/react": "^7.3.3",
     "bcrypt-ts-edge": "^3.0.1",
     "class-variance-authority": "^0.7.1",
@@ -36,8 +38,10 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-email": "^5.2.10",
     "react-hook-form": "^7.72.0",
     "recharts": "^3.8.1",
+    "resend": "^6.10.0",
     "shadcn": "^4.1.0",
     "slugify": "^1.6.8",
     "sonner": "^2.0.7",
@@ -50,6 +54,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^7.5.0",
+    "@react-email/preview-server": "^5.2.10",
     "@tailwindcss/postcss": "^4",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.19.37",

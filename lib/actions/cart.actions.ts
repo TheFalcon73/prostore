@@ -166,7 +166,9 @@ import { Prisma } from "../generated/prisma/client";
   const userId = session?.user?.id ? (session.user.id as string) : undefined;
 
   const cart = await prisma.cart.findFirst({
-    where: userId ? { userId: userId } : { sessionCartId: sessionCartId },
+    where: userId
+      ? { userId }                          // logged-in: match by user only
+      : { sessionCartId, userId: null },    // guest: match session AND no owner
   });
 
   if (!cart) return undefined;
